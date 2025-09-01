@@ -10,7 +10,9 @@ Exment Plugin Creatorは、Exmentのプラグイン開発を支援するため�
 ## 使い方
 VSCode　エージェントモードを想定しています。
 
-推奨モデルはChatGPT-5です。それに続いてClaude4です。
+推奨モデルはChatGPT-5またはClaude4です。
+
+
 
 開発したいプラグインの機能、使用したいExmentの機能をAI伝えてください。
 

@@ -1,11 +1,5 @@
 # Exmentプラグイン開発ガイド
 
-## はじめに
-
-このドキュメントは、Exmentの公式ドキュメント[1]とサンプルプラグインリポジトリ[2]に基づき、Exmentプラグインの作成方法を包括的にまとめたものです。Exmentの機能を拡張し、特定の業務要件に合わせたカスタマイズを行うために、プラグイン開発は非常に強力な手段となります。本ガイドは、AIがExmentプラグインを理解し、効率的に開発するための基盤となることを目的としています。
-
-Exmentプラグインは、PHPフレームワークであるLaravelとlaravel-adminを基盤として開発されます。そのため、Laravelの基本的な知識があることが推奨されます。
-
 ## Exmentプラグインの基本構造
 
 Exmentプラグインは、主に以下の要素で構成されます。
@@ -14,15 +8,6 @@ Exmentプラグインは、主に以下の要素で構成されます。
 *   **`Plugin.php`**: プラグインの主要なロジックを記述するPHPファイルです。プラグインのタイプに応じて、特定の基底クラスを継承します。
 *   **ビューファイル**: プラグインがUIを持つ場合（例: ページ、ビュー、ダッシュボード）、対応するBladeテンプレートファイルなどです。
 *   **その他のファイル**: CSS、JavaScript、画像などのアセットファイルや、追加のPHPクラスなどです。
-
-## 開発環境の準備
-
-Exmentプラグインを開発するためには、以下の環境が必要です。
-
-*   **PHP**: Exmentが動作するPHPバージョン（通常は最新の安定版）
-*   **Composer**: PHPの依存関係管理ツール
-*   **Exmentインストール環境**: 開発中のプラグインをテストするためのExmentインスタンス
-*   **テキストエディタ/IDE**: VS Code, PhpStormなど
 
 ## プラグインの種類と作成方法
 
@@ -495,73 +480,6 @@ Exmentの公式GitHubリポジトリには、様々なプラグインタイプ�
 3.  「プラグイン」セクションに移動し、「プラグインの追加」または類似のオプションを選択します。
 4.  作成したZIPファイルをアップロードします。
 5.  プラグインが正常にインストールされたら、必要に応じて設定を行います。
-
-## 結論
-
-Exmentのプラグイン開発は、Laravelの知識を活かし、Exmentの機能を柔軟に拡張するための強力な手段です。本ガイドが、AIによるExmentプラグイン開発の一助となれば幸いです。公式ドキュメントとサンプルコードを参考にしながら、様々なプラグインを開発し、Exmentの可能性を最大限に引き出してください。
-
-## 参考文献
-
-[1] Exment公式ドキュメント. 「プラグイン作成方法」. [https://exment.net/docs/#/ja/plugin_quickstart_view](https://exment.net/docs/#/ja/plugin_quickstart_view)
-[2] Exment GitHub. 「plugin-sample」. [https://github.com/exment-git/plugin-sample](https://github.com/exment-git/plugin-sample)
-
-
-
-
-## GitHubプラグインサンプル
-
-Exmentの公式GitHubリポジトリには、様々なプラグインタイプのサンプルコードが提供されています[2]。これらのサンプルは、実際のプラグイン開発の参考として非常に有用です。以下に、主要なサンプルプラグインの一部とその概要をまとめます。
-
-### サンプルプラグイン一覧
-
-| 名前 | 表示名 | 種類 | パス | 概要 |
-| --- | --- | --- | --- | --- |
-| PluginDemoAPI | カスタム列情報取得API | API | batch/PluginDemoAPI | 列名からカスタム列情報を取得するサンプルAPIです。 |
-| HarddeleteBatch | データの物理削除 | バッチ | batch/HarddeleteBatch | 論理削除しているすべてのデータを、完全に削除します。 |
-| PluginSyncBatch | 外部データベースのバッチによる同期処理 | バッチ | batch/PluginSyncBatch | 外部データベースの都市データをExmentのテーブルと一括同期します。 |
-| OperationLogDelete | 操作ログローテーション | バッチ | batch/OperationLogDelete | Exmentの操作ログを、一定日付経過したものをデータベースから物理削除します。 |
-| TestPluginAddFileButton | ファイル列追加ボタン | ボタン | button/TestPluginAddFileButton | 指定のデータの列に、ファイル列が存在する場合、サンプルファイルを追加します。 |
-| TestPluginDownload | ファイルダウンロードテスト | ボタン | button/TestPluginDownload | プラグインによって、ファイルをダウンロードするテストです。 |
-| PluginCustomButton | 「次へ」「前へ」ボタンを表示 | ボタン | button/PluginCustomButton | データ詳細画面に「次へ」「前へ」ボタンを表示します。 |
-| Docurain | Docurain | Docurain | docurain/Docurain | Docurainにより、PDFを作成するプラグインです。 |
-| document_demo_user | ユーザー情報出力 | ドキュメント | docurain/document_demo_user | ユーザー情報出力のテスト用です。 |
-| PluginDemoDocument | Exment新着情報出力 | ドキュメント | docurain/PluginDemoDocument | APIから取得したExment新着情報を出力します。 |
-| PluginSyncCity | 外部データ連携 | イベント | event/PluginSyncCity | 都市データの情報を外部データベースと連携します。 |
-| ExportTestCsv | エクスポート(CSV) | エクスポート | export/ExportTestCsv | CSVファイルをエクスポートするプラグインです。 |
-| ExportTestExcel | エクスポート(Excel) | エクスポート | export/ExportTestExcel | Excelファイルをエクスポートするプラグインです。 |
-| PluginImportContract | 独自ロジックによるインポート | インポート | import/PluginImportContract | 契約データを独自ロジックでインポートします。 |
-| SystemTableColumnList | システム向け テーブル・列一覧表示 | ページ | page/SystemTableColumnList | 内部パラメータも含めた、Exmentのテーブル・列の一覧を表示します。 |
-| YasumiPage | 休みページ | ページ | page/YasumiPage | 表示年の祝日をページに表示します。 |
-| YouTubeSearch | YouTube検索 | ページ | page/YouTubeSearch | YouTubeでデータ検索を行うプラグインです。 |
-| ReplaceZenHan | 全角半角変換 | スクリプト | script/ReplaceZenHan | 全角の英数字を半角に置き換えます。 |
-| ReplaceKanaHanZen | 半角カナ→全角カナ変換 | スクリプト | script/ReplaceKanaHanZen | 半角カナを全角カナに置き換えます。 |
-| SetAddress | 入力フォーム 住所セット | スクリプト | script/SetAddress | 入力フォームの郵便番号を使用し、住所をセットします。 |
-| TestScript | スクリプトテスト | スクリプト | script/TestScript | 一通りのスクリプトをテストします。 |
-| ChangeDynamicForm | 入力フォーム 動的切り替え | スクリプト | script/ChangeDynamicForm | 入力フォームの選択値に応じて、項目の表示非表示を切り替えます。 |
-| SetStyle | スタイルテスト | スタイル | style/SetStyle | スタイルテストです。すべての文字色を赤色にします。 |
-| TableScroll | 表 横スクロールスタイル | スタイル | style/TableScroll | 表の横スクロールのスタイルを設定します。 |
-| PluginValidatorTest | バリデーションテスト | バリデーション | validation/PluginValidatorTest | カスタムテーブルのバリデーションのテストです。 |
-| KanbanView | かんばんビュー | ビュー | view/KanbanView | シンプルなかんばんビューを表示するプラグインです。 |
-| MySQLWorld | 他のデータベース連携 | CRUDページ | crud/mysqlworld | Exmentとは異なるデータベースと接続し、データの取得・追加・編集・削除を実施します。 |
-| ShowLevels3Data | Exmentデータ独自取得 | CRUDページ | crud/show_levels3_data | 独自のSQLを用いて、3階層の項目を同時に一覧・参照できるようにするサンプルです。 |
-| WordPress | REST API連携 | CRUDページ | crud/wordpress | REST APIを使用し、指定のWordpressサイトの投稿を一覧表示・詳細表示します。 |
-| WordPresses | REST API連携(複数エンドポイント) | CRUDページ | crud/wordpresses | REST APIを使用し、複数のWordpressサイトの投稿を一覧表示・詳細表示します。複数のエンドポイントに対応し、画面からボタンで対象サイトを切り替えます。 |
-| WordPressPost | REST API連携(認証、POST) | CRUDページ | crud/wordpress_post | REST APIを使用し、指定のWordpressサイトの投稿を一覧表示・詳細表示します。また、事前設定したアクセスキーを使用し、投稿の追加・編集・削除も実施します。 |
-| OtherExment | REST API連携(OAuth認証) | CRUDページ | crud/OtherExment | 別サーバーのExmentとRest API連携し、データ取得を実施します。 |
-| BatchButton | バッチ・ボタンの同時実装 | バッチ・ボタン | multiple_plugin_type/batch-button | 複数のプラグインを1つのプラグインとして実装するサンプルです。 |
-
-### 使用方法
-
-GitHubのサンプルプラグインを使用するには、以下の手順に従います。
-
-1.  このリポジトリをcloneするか、zipでダウンロードします。
-2.  使用したいプラグインのフォルダまで遷移します。例: "HarddeleteBatch"を使用したい場合: `batch/HarddeleteBatch`
-3.  そのフォルダの"dist"フォルダを開きます。`ReadMe.md`など、説明用のファイルがある場合、`dist`フォルダと同階層に配置されています。プラグインの実体は、`dist`フォルダ内に配置されています。
-4.  `dist`フォルダの中身をzip化します。
-5.  zipファイルを、Exmentのプラグインページからインストールしてください。インストール方法は[こちら](https://exment.net/docs/#/ja/plugin_quickstart_view?id=plugin-installation)です。
-
-
-
 
 ### APIプラグインのサンプル: PluginDemoAPI
 
@@ -2781,8 +2699,6 @@ $(function () {
 *   正規表現とマップを使用して、文字列の置換処理を効率的に行う方法。
 
 
-
-
 ### スクリプトプラグインのサンプル: ReplaceZenHan
 
 **概要**: `ReplaceZenHan`は、Exmentのテキスト入力フィールドに入力された全角英数字を自動的に半角英数字に変換するスクリプトプラグインです。これにより、データの統一性を保ち、入力の手間を軽減します。
@@ -3255,9 +3171,6 @@ Exmentのビュープラグインにおいて、`public function setViewOptionFo
 3.  **動的なフォーム生成**: データベースのスキーマ情報（カスタムテーブルの列など）に基づいて、適切な選択肢や入力フィールドを動的に生成します。
 4.  **バリデーションとヘルプテキスト**: 各設定項目に対して、必須入力の指定や、ユーザーが設定内容を理解するためのヘルプテキストを提供します。
 
-### 提供された実装例の分析
-
-ユーザーから提供された `setViewOptionForm` のコードは、ガントチャートやカレンダーのようなタイムラインベースのビュープラグインに適した設定項目を定義しています。以下に各要素の詳細な分析を示します。
 
 ```php
 public function setViewOptionForm($form)
@@ -3323,7 +3236,6 @@ public function setViewOptionForm($form)
 *   **`color_column` (色指定列)**: アイテムの表示色を決定する列を選択します。この例では、列の値が「赤」「青」「緑」の場合に特定の色を適用するロジックが想定されています。
 
 #### 3. `static::setFilterFields($form, $this->custom_table);`
-
 *   **目的**: これは、Exmentのビュープラグインに共通して提供されるフィルタ（絞り込み）設定のフォームを追加するためのヘルパーメソッドです。ユーザーはここで、ビューに表示するデータを特定の条件で絞り込むための設定を行うことができます。
 *   **利点**: 開発者がフィルタ機能をゼロから実装する必要がなく、共通のUIとロジックを再利用できます。
 
@@ -3337,7 +3249,6 @@ public function setViewOptionForm($form)
 `setViewOptionForm` を実装する際のベストプラクティスと、提供されたコードをより明確にした例を以下に示します。
 
 #### ベストプラクティス
-
 1.  **明確なラベルとヘルプテキスト**: 各設定項目には、ユーザーがその目的をすぐに理解できるような明確なラベルと、必要に応じて詳細なヘルプテキストを提供します。
 2.  **適切な入力タイプ**: 設定内容に応じて、`select`（ドロップダウン）、`text`（テキスト入力）、`number`（数値入力）、`checkbox`（チェックボックス）など、適切なフォーム要素を選択します。
 3.  **動的な選択肢の生成**: カスタムテーブルの列など、Exmentの既存データに基づいて選択肢を動的に生成することで、ユーザーの利便性を高め、設定ミスを減らします。
@@ -3419,3 +3330,652 @@ class Plugin extends PluginViewBase
 この例は、ビュープラグインの設定フォームをどのように構築し、Exmentの既存のデータ構造と連携させるかを示しています。`setViewOptionForm` を適切に実装することで、ユーザーにとって非常に柔軟で使いやすいビューを提供することが可能になります。
 
 
+
+
+## プラグイン(イベント)
+Exmentの画面上で特定の操作を行った場合に実行され、値の更新などの処理を行うことができるプラグインです。この機能は、v3.2.0より追加されました。
+
+### イベントの種類
+Exmentで利用可能なイベントの種類とそれぞれの説明は以下の通りです。
+
+| 名前 | 種類 | 説明 |
+| --- | --- | --- |
+| loading | ロード開始時 | ページのロード処理の最初に、処理が起動します。 |
+| saving | 保存直前 | データの保存直前に、処理が起動します。 |
+| saved | 保存後 | データの保存後に、処理が起動します。 |
+| deleted | 削除後 | データの削除後に、処理が起動します。 |
+| workflow_action_executing | ワークフロー実行直前 | ワークフロー実行の直前に、処理が起動します。 |
+| workflow_action_executed | ワークフロー実行後 | ワークフロー実行後に、処理が起動します。 |
+| notify_executing | 通知実行直前 | 通知実行の直前に、処理が起動します。 |
+| notify_executed | 通知実行後 | 通知実行後に、処理が起動します。 |
+
+### 作成方法
+
+イベントプラグインを作成するには、主に以下の手順が必要です。
+
+#### config.json作成
+
+以下の形式で`config.json`ファイルを作成します。
+
+```json
+{
+    "plugin_name": "PluginDemoEvent",
+    "uuid": "fa7de170-992a-11e8-b568-0800200c9a66",
+    "plugin_view_name": "Plugin Event",
+    "description": "プラグインイベントを実行するテストです。",
+    "author": "(Your Name)",
+    "version": "1.0.0",
+    "plugin_type": "event",
+    "event_triggers": "loaded"
+}
+```
+
+*   `plugin_name`: 半角英数でプラグイン名を記入します。
+*   `uuid`: プラグインを一意にするための32文字の文字列（ハイフンを含めると36文字）です。UUIDジェネレーター（例: [https://www.famkruithof.net/uuid/uuidgen](https://www.famkruithof.net/uuid/uuidgen)）で作成してください。
+*   `plugin_type`: `event`と記入します。
+*   `event_triggers`: 最初からトリガーを指定する場合、「イベントの種類」の名称をカンマ区切りで入力します。
+*   `target_tables`: 最初から対象テーブルを指定する場合、カスタムテーブルのテーブル名をカンマ区切りで入力します。
+
+#### PHPファイル作成
+
+`Plugin.php`という名前で以下のPHPファイルを作成します。
+
+```php
+<?php
+namespace App\Plugins\PluginDemoEvent;
+
+use Exceedone\Exment\Services\Plugin\PluginEventBase;
+class Plugin extends PluginEventBase
+{
+    /**
+     * Plugin Trigger
+     */
+    public function execute()
+    {
+        \Log::debug(\'Event called!\');
+        return true;
+    }
+}
+```
+
+*   `namespace`は、`App\Plugins\(プラグイン名のパスカルケース)`としてください。
+*   プラグイン管理画面で登録したトリガーの条件に合致した場合に、この`execute`関数が実行されます。
+*   `Plugin`クラスは`PluginEventBase`を継承します。`PluginEventBase`は、呼び出し元のカスタムテーブル`$custom_table`やテーブル値`$custom_value`などのプロパティを所有しており、`execute`関数が呼び出された時点でそれらの値が代入されます。プロパティの詳細については、[プラグインリファレンス](https://exment.net/docs/#/ja/plugin_quickstart_view?id=plugin-reference)を参照してください。
+
+#### zipに圧縮
+
+作成した`config.json`と`Plugin.php`（およびその他の必要なファイル）を最小構成としてzipファイルに圧縮します。zipファイル名は「`(plugin_name).zip`」としてください。
+
+例:
+*   `PluginDemoEvent.zip`
+    *   `config.json`
+    *   `Plugin.php`
+    *   (その他、必要なPHPファイル、画像ファイルなど)
+
+### サンプルプラグイン (SyncCity)
+
+*   このサンプルは、カスタムデータの保存時に外部データベースとの連携を行うイベントプラグインです。
+*   Exmentの都市テーブルで追加・更新・削除を行うと、外部データベースの`city`テーブルにその変更が反映されます。
+*   **事前準備**:
+    1.  Exmentの管理者設定→テンプレートから、[テンプレート](https://exment.net/docs/#/ja/template)をインポートします。
+    2.  外部データベースを作成します。このプラグインではMySQLのサンプルデータベース「world」を利用しています。[公式サイト](https://dev.mysql.com/doc/index-other.html)からzipをダウンロードし、解凍したSQLをお使いのMySQL（またはMariaDB）環境で実行してください。
+    3.  Exmentの管理者設定→プラグインから、[プラグイン](https://exment.net/docs/#/ja/plugin_quickstart_view?id=plugin-installation)をアップロードします。
+    4.  プラグインの設定画面を開き、手順2で設定した外部データベースの接続情報を入力し、保存してください。
+
+
+
+
+## 追加のプラグインタイプ
+
+### エクスポート
+
+エクスポートプラグインは、カスタムデータ一覧のエクスポートを独自に実装したい場合に使用できます。オリジナルフォーマットのファイルをエクスポートする場合や、特殊な変換処理を実装する場合にご利用ください。
+
+#### 出力形式について
+
+出力形式は、Excelの他、それ以外のフォーマットでの出力も可能です。Excel形式の場合、処理をより最適化しております。
+
+#### 作成方法（通常）
+
+1. **config.json作成**
+
+```json
+{
+    "plugin_name": "ExportTestCsv",
+    "uuid": "1e7881d0-324f-11e9-b56e-0800200c9a33",
+    "plugin_view_name": "ExportTestCsv",
+    "description": "エクスポートのCSVテストです。",
+    "author": "Kajitori",
+    "version": "0.0.1",
+    "plugin_type": "export",
+    "target_tables": "information",
+    "label": "お知らせ情報出力",
+    "icon": "fa-question",
+    "export_description": "お知らせ情報を、独自のcsv形式で一覧出力します。"
+}
+```
+
+2. **PHPファイル作成**
+
+```php
+<?php
+namespace App\Plugins\ExportTestCsv;
+
+use Exceedone\Exment\Services\Plugin\PluginExportBase;
+
+class Plugin extends PluginExportBase
+{
+    /**
+     * execute
+     */
+    public function execute() 
+    {
+        // ※メソッド「$this->getTmpFullPath()」で、一時tmpファイルを取得する
+        // ※実行後、一時tmpファイルは自動的に削除されます。
+        $tmp = $this->getTmpFullPath();
+
+        ///// 独自の実装処理---ここから
+        // csvファイルを開く
+        $fp = fopen($tmp, 'w');
+
+        // すべてのシステム列・カスタム列でデータ一覧取得（配列）
+        $data = $this->getData();
+
+        // ビュー形式でデータ一覧取得（配列）
+        // $data = $this->getViewData();
+
+        // CustomValueのCollectionでデータ一覧取得
+        // $data = $this->getRecords();
+
+        foreach ($data as $fields) {
+            fputcsv($fp, $fields);
+        }
+
+        fclose($fp);
+        ///// 独自の実装処理---ここまで
+
+        // $tmpのstring文字列を返却する
+        return $tmp;
+    }
+
+    /**
+     * Get download file name.
+     * ファイル名を取得する
+     *
+     * @return string
+     */
+    public function getFileName() : string {
+        return "test.csv";
+    }
+}
+```
+
+#### 作成方法（Excel）
+
+Excel形式で出力する場合も基本的には同様の手順で実装しますが、PHPファイルの作成時、より便利に実装できます。PHPでExcelを操作するためのライブラリPhpSpreadsheetを使用しています。
+
+```php
+<?php
+namespace App\Plugins\ExportTestExcel;
+
+// PluginExportExcelに変更
+use Exceedone\Exment\Services\Plugin\PluginExportExcel;
+
+// extendsをPluginExportExcelに変更
+class Plugin extends PluginExportExcel
+{
+    /**
+     * execute
+     */
+    public function execute() {
+        // テンプレートファイルを読み込み、PhpSpreadsheetを初期化
+        $spreadsheet = $this->initializeExcel('template.xlsx');
+        // ※テンプレートファイルを使用せず、新規にファイルを作成する場合
+        // $spreadsheet = $this->initializeExcel();
+
+        // CustomValueのCollectionでデータ一覧取得
+        $data = $this->getRecords();
+
+        ///// 独自の実装処理---ここから
+        $sheet = $spreadsheet->getActiveSheet();
+        $column = 3;
+        foreach($data as $record){
+            // データをループしてセット
+            $sheet->setCellValue("A{$column}", $record->id); // ID
+            $sheet->setCellValue("B{$column}", $record->getValue('title', true)); // タイトル
+            $sheet->setCellValue("C{$column}", $record->getValue('priority', true)); // 重要度
+            $sheet->setCellValue("D{$column}", $record->updated_at); // 更新日時
+
+            $column++;
+        }
+
+        // 枠の設定
+        $laseRow = $column - 1;
+        $sheet->getStyle("A2:D{$laseRow}")->applyFromArray([
+            'borders' => [
+                'outside'=>[
+                    'borderStyle'=>\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN
+                ],
+                'inside'=>[
+                    'borderStyle'=>\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_HAIR
+                ],
+            ],
+        ]);
+
+        // 印刷範囲の設定
+        $sheet->getPageSetup()->setPrintArea("A1:D{$laseRow}");
+        ///// 独自の実装処理---ここまで
+
+        // Excelファイルを出力
+        return $this->outputExcel($spreadsheet);
+    }
+
+    /**
+     * Get download file name.
+     * ファイル名を取得する
+     *
+     * @return string
+     */
+    public function getFileName() : string {
+        return "test.xlsx";
+    }
+}
+```
+
+### インポート
+
+インポートプラグインは、カスタムデータへのインポート処理を独自に実装することができます。既存システムで出力したファイル等をExmentに取り込む場合は、このプラグインの使用をおすすめします。
+
+#### 作成方法
+
+1. **config.json作成**
+
+```json
+{
+    "uuid": "b5c0a5d2-2716-4161-98d0-b490c1ebc521",
+    "plugin_name": "PluginImportContract",
+    "plugin_view_name": "契約データのインポート",
+    "description": "契約データを独自ロジックでインポートします。",
+    "author":  "Kajitori",
+    "version": "1.0.0",
+    "plugin_type": "import",
+    "target_tables": "contract",
+    "label": "契約インポート",
+    "icon": "fa-files-o"
+}
+```
+
+2. **PHPファイル作成**
+
+```php
+<?php
+namespace App\Plugins\Pluginimportcontract;
+
+use Exceedone\Exment\Services\Plugin\PluginImportBase;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+class Plugin extends PluginImportBase{
+    /**
+     * execute
+     */
+    public function execute() {
+        $path = $this->file->getRealPath();
+
+        $reader = $this->createReader();
+        $spreadsheet = $reader->load($path);
+
+        // Sheet1のB4セルの内容で契約テーブルを読み込みます
+        $sheet = $spreadsheet->getSheetByName('Sheet1');
+        $client_name = getCellValue('B4', $sheet, true);
+        $client = getModelName('client')::where('value->client_name', $client_name)->first();
+
+        // Sheet1のヘッダ部分に記載された情報で契約データを編集します
+        // statusには固定値:1を設定します
+        $contract = [
+            'value->contract_code' => getCellValue('B3', $sheet, true),
+            'value->client' => $client->id,
+            'value->status' => '1',
+            'value->contract_date' => getCellValue('D4', $sheet, true),
+        ];
+        // 契約テーブルにレコードを追加します
+        $record = getModelName('contract')::create($contract);
+
+        // Sheet1の7行目～15行目に記載された明細情報を元に契約明細データを出力します
+        for ($i = 7; $i <= 15; $i++) {
+            // A列から製品バージョンコードを取得します
+            $product_version_code = getCellValue("A$i", $sheet, true);
+            // 製品バージョンコードが設定されていない時は次の行にスキップします
+            if (!isset($product_version_code)) break;
+            // 製品バージョンコードで、製品バージョンテーブルを読み込みます
+            $product_version = getModelName('product_version')
+                ::where('value->product_version_code', $product_version_code)->first();
+            // 製品バージョンテーブルが取得できなかった場合は次の行にスキップします
+            if (!isset($product_version)) continue;
+            // 明細行と製品バージョンテーブルから契約明細データを編集します
+            $contract_detail = [
+                'parent_id' => $record->id,
+                'parent_type' => 'contract',
+                'value->product_version_id' => $product_version->id,
+                'value->fixed_price' => getCellValue("B$i", $sheet, true),
+                'value->num' => getCellValue("C$i", $sheet, true),
+                'value->zeinuki_price' => getCellValue("D$i", $sheet, true),
+            ];
+            // 契約明細テーブルにレコードを追加します
+            getModelName('contract_detail')::create($contract_detail);
+        }
+
+        return true;
+    }
+
+    /**
+     * create reader
+     */
+    protected function createReader()
+    {
+        return IOFactory::createReader('Xlsx');
+    }
+}
+```
+
+### CRUDページ
+
+CRUDページプラグインは、Exmentに新しいCRUD（Create, Read, Update, Delete）機能を持つページを追加します。これにより、Exmentの標準機能では対応できない特殊なデータ管理画面を構築できます。
+
+#### 作成方法
+
+1. **config.json作成**
+
+```json
+{
+    "plugin_name": "MySQLWorld",
+    "plugin_view_name": "MySQL World",
+    "description": "MySQLのworldデータベースを表示します。",
+    "uuid": "your-unique-uuid-here",
+    "author": "(Your Name)",
+    "version": "1.0.0",
+    "plugin_type": "crud"
+}
+```
+
+2. **PHPファイル作成**
+
+```php
+<?php
+namespace App\Plugins\MySQLWorld;
+
+use Exceedone\Exment\Services\Plugin\PluginCrudBase;
+
+class Plugin extends PluginCrudBase
+{
+    /**
+     * 一覧画面の表示
+     */
+    public function grid()
+    {
+        // CRUDの一覧表示ロジック
+        return $this->pluginView('grid', ['data' => $this->getData()]);
+    }
+
+    /**
+     * 詳細画面の表示
+     */
+    public function show($id)
+    {
+        // CRUDの詳細表示ロジック
+        $data = $this->getDataById($id);
+        return $this->pluginView('show', ['data' => $data]);
+    }
+
+    /**
+     * 作成画面の表示
+     */
+    public function create()
+    {
+        // CRUDの作成画面ロジック
+        return $this->pluginView('create');
+    }
+
+    /**
+     * 編集画面の表示
+     */
+    public function edit($id)
+    {
+        // CRUDの編集画面ロジック
+        $data = $this->getDataById($id);
+        return $this->pluginView('edit', ['data' => $data]);
+    }
+
+    /**
+     * データの保存
+     */
+    public function store()
+    {
+        // CRUDの保存ロジック
+        // バリデーション、データ保存処理
+        return redirect()->back()->with('success', 'データが保存されました。');
+    }
+
+    /**
+     * データの更新
+     */
+    public function update($id)
+    {
+        // CRUDの更新ロジック
+        // バリデーション、データ更新処理
+        return redirect()->back()->with('success', 'データが更新されました。');
+    }
+
+    /**
+     * データの削除
+     */
+    public function destroy($id)
+    {
+        // CRUDの削除ロジック
+        // データ削除処理
+        return redirect()->back()->with('success', 'データが削除されました。');
+    }
+}
+```
+
+### API
+
+APIプラグインは、Exmentに新しいAPIエンドポイントを追加します。これにより、外部システムとの連携や、カスタムアプリケーションからのデータアクセスが可能になります。
+
+#### 作成方法
+
+1. **config.json作成**
+
+```json
+{
+    "plugin_name": "PluginDemoAPI",
+    "plugin_view_name": "デモAPI",
+    "description": "APIのデモプラグインです。",
+    "uuid": "your-unique-uuid-here",
+    "author": "(Your Name)",
+    "version": "1.0.0",
+    "plugin_type": "api",
+    "route": [
+        {
+            "uri": "test",
+            "method": ["get"],
+            "function": "test"
+        },
+        {
+            "uri": "data/{id}",
+            "method": ["get"],
+            "function": "getData"
+        }
+    ]
+}
+```
+
+2. **PHPファイル作成**
+
+```php
+<?php
+namespace App\Plugins\PluginDemoAPI;
+
+use Exceedone\Exment\Services\Plugin\PluginApiBase;
+
+class Plugin extends PluginApiBase
+{
+    /**
+     * テストAPI
+     */
+    public function test()
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'API test successful',
+            'timestamp' => now()
+        ]);
+    }
+
+    /**
+     * データ取得API
+     */
+    public function getData($id)
+    {
+        // IDに基づいてデータを取得
+        $data = $this->getCustomData($id);
+        
+        if (!$data) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
+
+    /**
+     * カスタムデータ取得メソッド
+     */
+    private function getCustomData($id)
+    {
+        // ここにデータ取得ロジックを実装
+        // 例: データベースからデータを取得
+        return [
+            'id' => $id,
+            'name' => 'Sample Data',
+            'created_at' => now()
+        ];
+    }
+}
+```
+
+### バリデーション
+
+バリデーションプラグインは、Exmentのデータ入力時に独自のバリデーションルールを追加します。これにより、業務固有の検証ロジックを実装できます。
+
+#### 作成方法
+
+1. **config.json作成**
+
+```json
+{
+    "plugin_name": "PluginValidatorTest",
+    "plugin_view_name": "バリデーションテスト",
+    "description": "カスタムバリデーションのテストプラグインです。",
+    "uuid": "your-unique-uuid-here",
+    "author": "(Your Name)",
+    "version": "1.0.0",
+    "plugin_type": "validator",
+    "target_tables": "your_table_name"
+}
+```
+
+2. **PHPファイル作成**
+
+```php
+<?php
+namespace App\Plugins\PluginValidatorTest;
+
+use Exceedone\Exment\Services\Plugin\PluginValidatorBase;
+
+class Plugin extends PluginValidatorBase
+{
+    /**
+     * バリデーション実行
+     */
+    public function validate($data, $custom_table, $custom_value = null)
+    {
+        $errors = [];
+
+        // カスタムバリデーションロジック
+        if (isset($data['email']) && !$this->isValidEmail($data['email'])) {
+            $errors['email'] = 'メールアドレスの形式が正しくありません。';
+        }
+
+        if (isset($data['age']) && $data['age'] < 0) {
+            $errors['age'] = '年齢は0以上である必要があります。';
+        }
+
+        // 複数フィールドの組み合わせバリデーション
+        if (isset($data['start_date']) && isset($data['end_date'])) {
+            if (strtotime($data['start_date']) > strtotime($data['end_date'])) {
+                $errors['end_date'] = '終了日は開始日より後である必要があります。';
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
+     * メールアドレスの独自バリデーション
+     */
+    private function isValidEmail($email)
+    {
+        // 独自のメールアドレス検証ロジック
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+}
+```
+
+### Docurain（PDF出力）
+
+DocurainプラグインはExcelとjsonだけで帳票開発ができるクラウド帳票エンジンDocurainを使用し、PDF出力を行います。
+
+#### Docurainとは
+
+Docurainは、Excelとjsonだけで帳票開発ができるクラウド帳票エンジンです。さまざまなレイアウトの帳票も、Excelファイルのテンプレートから作成することができ、またPDF形式の出力にも対応しています。
+
+#### 実行方法
+
+1. 公式プラグインをダウンロードし、Exmentのプラグインとしてアップロードします。
+2. アップロード後、Docurainプラグインの設定画面で以下の内容を入力します：
+   - 対象テーブル：Docurainを実行する対象のテーブル
+   - トークン：Docurain実行トークン
+   - テーブル名と帳票ファイル名一覧：帳票出力を行うテーブル名とテンプレートファイル名、出力する帳票ファイル名、ボタンのラベルをカンマ区切りで入力
+
+#### テンプレートExcelファイル作成
+
+帳票の元となるExcelファイルを作成します。テンプレートファイルのパラメータは、通常のExmentのパラメータ記載方法とは異なり、Docurain専用の記載方法が必要です。
+
+##### パラメータ例
+
+- システム値：`%{system.site_name}`, `%{system.site_name_short}`
+- データ：`%{id}`, `%{value.(列名)}`, `%{select_table.(列名).(参照先のテーブルの列名)}`
+- 親テーブル：`%{parent.(参照先のテーブルの列名)}`
+- 子テーブル：`$ENTITY.children.(子テーブル名)`
+
+## イベント（非推奨）
+
+v3.2.0より、「プラグイン(トリガー)」は非推奨になりました。今後は、「プラグイン(ボタン)」もしくは「プラグイン(イベント)」での実装を行ってください。
+
+Exmentの画面上で特定の操作を行った場合に実行され、値の更新などの処理を行うことができます。もしくは、一覧画面もしくはフォーム画面にボタンを追加し、クリック時に処理を行うことができます。
+
+### トリガーの種類
+
+| 名前 | 種類 | 説明 |
+|------|------|------|
+| saving | 保存直前 | データの保存直前に、処理が起動します。 |
+| saved | 保存後 | データの保存後に、処理が起動します。 |
+| grid_menubutton | データ一覧画面のメニューボタン | データ一覧画面の上部にボタンを追加し、クリック時にイベントを発生させます。 |
+| form_menubutton_show | データ詳細画面のメニューボタン | データ詳細画面の上部にボタンを追加し、クリック時にイベントを発生させます。 |
+| form_menubutton_create | データ新規作成画面のメニューボタン | データ新規作成画面の上部にボタンを追加し、クリック時にイベントを発生させます。 |
+| form_menubutton_edit | データ編集画面のメニューボタン | データ編集画面の上部にボタンを追加し、クリック時にイベントを発生させます。 |

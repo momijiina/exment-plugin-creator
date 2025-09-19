@@ -174,59 +174,244 @@ class Plugin extends PluginDocumentBase
 *   `detail`メソッドには、現在表示されているカスタムデータの情報が`$data`として渡されます。
 
 ### ダッシュボード
-
+基本的にダッシュボードにピッタリと収まる余白なく収まるようにすること。
 ダッシュボードプラグインは、Exmentのトップページにカスタムウィジェットや情報表示を追加する機能を提供します。これにより、ユーザーはログイン時に重要な情報を一目で確認できます。
 
-#### 作成方法
+#### 基本的な作成方法
 
 1.  **`Plugin.php`ファイルの作成**: `app/Plugins` ディレクトリ内に、プラグイン名に対応するディレクトリを作成し、その中に`Plugin.php`ファイルを作成します。
 2.  **`config.json`の設定**: `config.json`ファイルで`plugin_type`を`dashboard`に設定します。
-3.  **ダッシュボードウィジェットの実装**: `Plugin.php`内で、`PluginDashboardBase`を継承したクラスを作成し、`index`メソッドにダッシュボードウィジェットのロジックを記述します。
+3.  **ダッシュボードウィジェットの実装**: `Plugin.php`内で、`PluginDashboardBase`を継承したクラスを作成し、`body`メソッドにダッシュボードウィジェットのロジックを記述します。
 
-#### 例: 最新データを表示するダッシュボードウィジェット
+#### ダッシュボード時計プラグインの完全な実装例
+
+以下は、リアルタイムで更新される時計を表示するダッシュボードプラグインの完全な実装例です。この例を参考にすることで、1回でピッタリと動作するダッシュボードプラグインを作成できます。
+
+##### `config.json`
+
+```json
+{
+    "plugin_name": "ExmentClock",
+    "plugin_view_name": "Exmentダッシュボード時計",
+    "description": "ダッシュボードにリアルタイム時計を表示します",
+    "uuid": "12345678-1234-1234-1234-123456789abc",
+    "author": "Exment開発チーム",
+    "version": "1.0.0",
+    "plugin_type": "dashboard"
+}
+```
+
+**重要なポイント:**
+- `plugin_type`は必ず`dashboard`に設定
+- `uuid`は一意の値を生成（[UUIDジェネレーター](https://www.uuidgenerator.net/)を使用）
+- `plugin_name`はディレクトリ名と一致させる
+
+##### `Plugin.php`
 
 ```php
 <?php
 
-namespace App\Plugins\YourDashboardPlugin;
+namespace App\Plugins\ExmentClock;
 
 use Exceedone\Exment\Services\Plugin\PluginDashboardBase;
-use Exceedone\Exment\Model\CustomTable;
-use Encore\Admin\Widgets\Box;
+use Carbon\Carbon;
 
 class Plugin extends PluginDashboardBase
 {
     /**
-     * ダッシュボードに表示するウィジェットを生成します。
-     *
-     * @return \Encore\Admin\Widgets\Box
+     * ダッシュボードの本体を返す
+     * 
+     * @return string HTML文字列
      */
-    public function index()
+    public function body()
     {
-        $latestData = CustomTable::find("your_table_id")
-            ->data()
-            ->orderBy("created_at", "desc")
-            ->limit(5)
-            ->get();
+        // 現在の日本時間を取得
+        $now = Carbon::now('Asia/Tokyo');
+        
+        // HTML文字列として時計を生成
+        return $this->generateClockHtml($now);
+    }
+    
+    /**
+     * 時計のHTML文字列を生成
+     * 
+     * @param Carbon $time 現在時刻
+     * @return string
+     */
+    private function generateClockHtml($time)
+    {
+        $formattedDate = $time->format('Y年m月d日');
+        $formattedTime = $time->format('H:i:s');
+        $dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][$time->dayOfWeek];
+        
+        return '
+        <div style="
+            background: #fff; 
+            padding: 20px; 
+            border-radius: 3px; 
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1); 
+            margin: 0;
+            text-align: center; 
+            font-family: \'Arial\', sans-serif;
+        ">
+            <div style="font-size: 18px; color: #333; margin-bottom: 10px; font-weight: bold;">
+                📅 ' . $formattedDate . ' (' . $dayOfWeek . ')
+            </div>
+            <div id="current-time" style="
+                font-size: 32px; 
+                color: #007bff; 
+                font-weight: bold; 
+                font-family: \'Courier New\', monospace;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            ">
+                🕐 ' . $formattedTime . '
+            </div>
+            <div style="
+                font-size: 12px; 
+                color: #666; 
+                margin-top: 8px;
+            ">
+                日本標準時 (JST)
+            </div>
+        </div>
 
-        $content = "<ul>";
-        foreach ($latestData as $data) {
-            $content .= "<li>" . $data->your_column_name . "</li>";
-        }
-        $content .= "</ul>";
-
-        $box = new Box("最新データ", $content);
-        $box->style("info");
-
-        return $box;
+        <script>
+        (function() {
+            function updateClock() {
+                const now = new Date();
+                const jst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+                const timeString = jst.toTimeString().split(\' \')[0];
+                const timeElement = document.getElementById(\'current-time\');
+                if (timeElement) {
+                    timeElement.innerHTML = \'🕐 \' + timeString;
+                }
+            }
+            
+            // 1秒ごとに時刻を更新
+            setInterval(updateClock, 1000);
+            
+            // 初回実行
+            updateClock();
+        })();
+        </script>
+        ';
     }
 }
 ```
 
+#### ダッシュボードプラグイン開発のベストプラクティス
+
+##### 1. スタイリングの注意点
+
+- **既存プラグインとの統一**: Exmentの他のダッシュボードプラグインと同様のスタイルを適用
+- **レスポンシブ対応**: 様々な画面サイズで適切に表示されるように設計
+- **マージンの調整**: `margin: 0`を設定して、余分な空白を削除
+
+##### 2. JavaScriptの実装
+
+```javascript
+// 即座実行関数でスコープを分離
+(function() {
+    function updateFunction() {
+        // 更新処理
+    }
+    
+    // インターバル設定
+    setInterval(updateFunction, 1000);
+    
+    // 初回実行
+    updateFunction();
+})();
+```
+
+##### 3. 日時処理での注意
+
+```php
+// Carbonを使用して日本時間を正確に取得
+$now = Carbon::now('Asia/Tokyo');
+
+// JavaScriptでもJSTを考慮
+const jst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+```
+
+##### 4. HTMLとCSSのインライン記述
+
+ダッシュボードプラグインでは、通常はBladeビューファイルを使用せず、PHP内でHTML文字列を直接生成します。これにより、ビューのnamespace問題を回避できます。
+
+#### よくあるエラーとその解決方法
+
+##### 1. ビューファイル関連のエラー
+
+**エラー例**: `No hint path defined for [plugin_name]`
+
+**解決方法**: Bladeビューファイルを使用せず、HTML文字列を直接返すように実装する。
+
+##### 2. スタイルの問題
+
+**問題**: ダッシュボードに青い線や余分なマージンが表示される
+
+**解決方法**: 
+```css
+margin: 0;
+border: none;
+box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+```
+
+##### 3. JavaScript実行タイミングの問題
+
+**解決方法**: 即座実行関数を使用してDOMロード完了を待つ必要なく実行
+
+#### 高度な実装例: データベース連携
+
+```php
+public function body()
+{
+    // カスタムテーブルからデータを取得
+    $taskCount = CustomTable::getEloquent('tasks')
+        ->getValueModel()
+        ->where('value->status', '進行中')
+        ->count();
+    
+    return $this->generateTaskCountHtml($taskCount);
+}
+
+private function generateTaskCountHtml($count)
+{
+    return '
+    <div style="background: #fff; padding: 20px; border-radius: 3px; box-shadow: 0 1px 1px rgba(0,0,0,0.1); margin: 0; text-align: center;">
+        <h3 style="color: #333; margin: 0 0 10px 0;">📋 進行中タスク</h3>
+        <div style="font-size: 48px; color: #28a745; font-weight: bold;">' . $count . '</div>
+        <div style="color: #666; font-size: 14px;">件のタスクが進行中です</div>
+    </div>';
+}
+```
+
+#### プラグインのパッケージ化
+
+1. **ディレクトリ構成**:
+```
+ExmentClock/
+├── config.json
+└── Plugin.php
+```
+
+2. **ZIPファイル作成**: 
+- ファイル名: `ExmentClock.zip`
+- 最小構成でパッケージ化
+
+#### デプロイと動作確認
+
+1. **プラグインのアップロード**: Exment管理画面 > プラグイン > 新規追加
+2. **ダッシュボードでの確認**: トップページでウィジェットが正しく表示されることを確認
+3. **リアルタイム更新の確認**: 時刻が1秒ごとに更新されることを確認
+
+この実装例を参考にすることで、Exmentのダッシュボードプラグインを確実に作成し、デプロイすることができます。
+
 #### 注意事項
 
-*   ダッシュボードウィジェットは、Laravel AdminのBoxコンポーネントを利用して簡単に作成できます。
-*   グラフや統計情報を表示するために、外部ライブラリを組み込むことも可能です。
+*   ダッシュボードウィジェットは、Laravel AdminのBoxコンポーネントの代わりにHTML文字列を直接返すことで、より柔軟な表示が可能です。
+*   リアルタイム更新が必要な場合は、JavaScriptのsetIntervalを活用してください。
+*   スタイリングは既存のExmentプラグインと統一感を保つようにしてください。
 
 ### バッチ
 

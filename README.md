@@ -4,18 +4,29 @@ Exment Plugin Creatorは、Exmentのプラグイン開発を支援するため�
 
 公式サンプルコード＋αをベースにマニュアルを作成しているためベースコードは公式マニュアルか公式のサンプルを確認してください。
 
-※<ins>マニュアルをV2.0へ更新しました</ins>
-### V1.0の場合
-<img width="1850" height="955" alt="20250901-10" src="https://github.com/user-attachments/assets/dec1553d-789e-497e-bd95-25c9716fae84" />
+※<ins>マニュアルをV2.2へ更新しました</ins>
+ ### V2.2ついて
+ 一部画像の取り扱いに関するマニュアルを追加しています<br/>
+ダッシュボードでの画像の取り扱いやカードビューの作成が可能となっているはず
+<img width="813" height="486" alt="ss20251002" src="https://github.com/user-attachments/assets/a61bfd66-25c6-42c3-aee3-d9a17eb8d645" />
+<img width="805" height="492" alt="ss20251002-2" src="https://github.com/user-attachments/assets/39ee3fb4-2d30-42d2-b2a6-2882f711e3e6" />
 
-<img width="1670" height="703" alt="20250901-9" src="https://github.com/user-attachments/assets/11e93b1a-03b7-4b83-8e59-96f296d3ef68" />
+ 
+<details>
+  <summary>旧バージョンについて</summary>
 
-### V2.0の場合
-AIにエラーコードを渡すとbladeを削除してしまいましたがまぁ綺麗にできてます。
-<img width="1890" height="823" alt="ss1" src="https://github.com/user-attachments/assets/ca227e11-6b1c-4b26-97b9-f0b0238dee12" />
+  ### V1.0について
+  <img width="1850" height="955" alt="20250901-10" src="https://github.com/user-attachments/assets/dec1553d-789e-497e-bd95-25c9716fae84" />
+  
+  <img width="1670" height="703" alt="20250901-9" src="https://github.com/user-attachments/assets/11e93b1a-03b7-4b83-8e59-96f296d3ef68" />
+  
+  ### V2.0ついて
+  AIにエラーコードを渡すとbladeを削除してしまいましたがまぁ綺麗にできてます。
+  <img width="1890" height="823" alt="ss1" src="https://github.com/user-attachments/assets/ca227e11-6b1c-4b26-97b9-f0b0238dee12" />
+  
+  <img width="1883" height="840" alt="ss2" src="https://github.com/user-attachments/assets/616aab27-9bbc-4e2f-8ae3-af8450b656fd" />
 
-<img width="1883" height="840" alt="ss2" src="https://github.com/user-attachments/assets/616aab27-9bbc-4e2f-8ae3-af8450b656fd" />
-
+</details>
 
 ## 主な機能
 コード生成: プラグインのテンプレートを生成します。

@@ -36,7 +36,7 @@ VSCodeのエージェントモードを想定しています。
 
 AIにガイドを必ず読ませてください
 
-推奨モデルはClaude4です。
+推奨モデルはClaude4（4.5プレビューの方がいいかも）です。
 
 ### ガイドを入れたフォルダをVSCodeで開く
 <img width="670" height="408" alt="ss5" src="https://github.com/user-attachments/assets/a4deeeec-eb3b-4302-ace0-d8430e5b3dcd" />

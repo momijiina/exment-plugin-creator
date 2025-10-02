@@ -4148,6 +4148,197 @@ Docurainは、Excelとjsonだけで帳票開発ができるクラウド帳票エ
 - 親テーブル：`%{parent.(参照先のテーブルの列名)}`
 - 子テーブル：`$ENTITY.children.(子テーブル名)`
 
+## プラグイン開発における画像・ファイルの取得方法
+
+Exmentのビュープラグインやその他のプラグインで画像やファイルを扱う際、正しいURLを取得する方法について説明します。
+
+### 画像・ファイル列からの値取得
+
+Exmentのカスタム値から画像やファイルの値を取得する場合、以下のような形式で取得されます：
+
+```php
+$imageValue = $item->getValue($imageColumn->column_name);
+```
+
+取得される値は以下のいずれかの形式です：
+
+1. **ファイルオブジェクト**（推奨）: `Exceedone\Exment\Model\File` オブジェクト
+2. **文字列**: ファイルパス（相対パスまたは絶対URL）
+3. **配列**: 複数ファイルの場合、上記のいずれかの配列
+
+### 画像URLの正しい取得方法
+
+#### 問題のあるコード例
+
+```php
+// ❌ 相対パスがそのまま使用される可能性がある
+if (is_object($imageFile) && method_exists($imageFile, 'getUrl')) {
+    $imageUrl = $imageFile->getUrl();
+} elseif (is_string($imageFile)) {
+    $imageUrl = $imageFile; // これだと相対パスのまま
+}
+```
+
+このコードの問題点：
+- 文字列が相対パス（例: `test/01e56b00-9e70-11f0-8d8a-c5b42f55a0b7.png`）の場合、画像が表示されない
+- 正しいURL: `https://example.com/admin/files/test/01e56b00-9e70-11f0-8d8a-c5b42f55a0b7.png`
+
+#### 正しいコード例
+
+```php
+foreach ($imageFiles as $imageFile) {
+    $imageUrl = null;
+    
+    if (is_object($imageFile)) {
+        // オブジェクトの場合、getUrlメソッドで完全なURLを取得
+        if (method_exists($imageFile, 'getUrl')) {
+            $imageUrl = $imageFile->getUrl();
+        }
+    } elseif (is_string($imageFile)) {
+        // 文字列の場合、admin_urlでフルパスに変換
+        if (strpos($imageFile, 'http') === 0) {
+            // すでに完全なURLの場合はそのまま使用
+            $imageUrl = $imageFile;
+        } else {
+            // 相対パスの場合、admin/filesを前置して完全なURLに変換
+            $imageUrl = admin_url('files/' . ltrim($imageFile, '/'));
+        }
+    }
+    
+    if ($imageUrl) {
+        // 画像URLを使用
+        $images[] = [
+            'url' => $imageUrl,
+            'title' => $item->getLabel(),
+        ];
+    }
+}
+```
+
+### ベストプラクティス
+
+#### 1. 複数ファイル対応
+
+```php
+// 単一ファイルと複数ファイルの両方に対応
+$imageFiles = is_array($imageValue) ? $imageValue : [$imageValue];
+
+foreach ($imageFiles as $imageFile) {
+    // 各ファイルを処理
+}
+```
+
+#### 2. オブジェクトメソッドの活用
+
+Exmentの`File`オブジェクトには便利なメソッドが用意されています：
+
+```php
+if (is_object($imageFile)) {
+    $imageUrl = $imageFile->getUrl();           // 完全なURL
+    $imagePath = $imageFile->path;              // ストレージパス
+    $fileName = $imageFile->filename;           // ファイル名
+    $fileSize = $imageFile->size;               // ファイルサイズ
+}
+```
+
+#### 3. ヘルパー関数の使用
+
+Exmentでは以下のヘルパー関数が利用可能です：
+
+- `admin_url($path)`: 管理画面のベースURLにパスを追加
+- `url($path)`: アプリケーションのベースURLにパスを追加
+
+```php
+// 例
+$fileUrl = admin_url('files/test/image.png');
+// 結果: https://example.com/admin/files/test/image.png
+```
+
+### ギャラリービュープラグインでの完全な実装例
+
+```php
+protected function getImages()
+{
+    $query = $this->custom_table->getValueQuery();
+    $this->custom_view->filterModel($query);
+    $this->custom_view->sortModel($query);
+    
+    $items = collect();
+    $query->chunk(1000, function($values) use(&$items) {
+        $items = $items->merge($values);
+    });
+    
+    $imageColumnId = $this->custom_view->getCustomOption('image_column');
+    if (!$imageColumnId) {
+        return [];
+    }
+    
+    $imageColumn = CustomColumn::find($imageColumnId);
+    $images = [];
+    
+    foreach ($items as $item) {
+        $imageValue = $item->getValue($imageColumn->column_name);
+        
+        if (!$imageValue) {
+            continue;
+        }
+        
+        // 複数画像対応
+        $imageFiles = is_array($imageValue) ? $imageValue : [$imageValue];
+        
+        foreach ($imageFiles as $imageFile) {
+            $imageUrl = null;
+            
+            if (is_object($imageFile)) {
+                if (method_exists($imageFile, 'getUrl')) {
+                    $imageUrl = $imageFile->getUrl();
+                }
+            } elseif (is_string($imageFile)) {
+                if (strpos($imageFile, 'http') === 0) {
+                    $imageUrl = $imageFile;
+                } else {
+                    $imageUrl = admin_url('files/' . ltrim($imageFile, '/'));
+                }
+            }
+            
+            if ($imageUrl) {
+                $images[] = [
+                    'url' => $imageUrl,
+                    'title' => $item->getLabel(),
+                    'link' => $item->getUrl(),
+                ];
+            }
+        }
+    }
+    
+    return $images;
+}
+```
+
+### トラブルシューティング
+
+#### 問題: 画像が表示されない
+
+**症状**: 
+- デフォルトビュー: `https://example.com/admin/files/01e57490-9e70-11f0-bbca-9121eb900f28` ✅
+- カスタムビュー: `test/01e56b00-9e70-11f0-8d8a-c5b42f55a0b7.png` ❌
+
+**原因**: 相対パスのまま使用している
+
+**解決**: `admin_url('files/' . $path)` を使用して完全なURLに変換
+
+#### 問題: 一部の画像だけ表示されない
+
+**原因**: オブジェクトと文字列が混在している可能性
+
+**解決**: 両方の形式に対応したコードを実装（上記の「正しいコード例」参照）
+
+### 注意事項
+
+1. **セキュリティ**: ファイルパスを外部から受け取る場合は、必ず検証とサニタイズを行ってください
+2. **パフォーマンス**: 大量の画像を扱う場合は、ページネーションやLazy Loadingの実装を検討してください
+3. **互換性**: Exmentのバージョンアップ時に、Fileオブジェクトの仕様が変更される可能性があるため、オブジェクトメソッドの存在確認（`method_exists`）を行ってください
+
 ## イベント（非推奨）
 
 v3.2.0より、「プラグイン(トリガー)」は非推奨になりました。今後は、「プラグイン(ボタン)」もしくは「プラグイン(イベント)」での実装を行ってください。

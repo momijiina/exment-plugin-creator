@@ -32,11 +32,12 @@ Exment Plugin Creatorは、Exmentのプラグイン開発を支援するため�
 コード生成: プラグインのテンプレートを生成します。
 
 ## 使い方
-VSCodeのエージェントモードを想定しています。
+VSCodeのエージェントモードを想定しています。<br/>
+Antigravityは非推奨とします(現在、エラー処理させると劣化していきます)
 
 AIにガイドを必ず読ませてください
 
-推奨モデルはClaude4（4.5プレビューの方がいいかも）です。
+推奨モデルはClaude4.5です。
 
 ### ガイドを入れたフォルダをVSCodeで開く
 <img width="670" height="408" alt="ss5" src="https://github.com/user-attachments/assets/a4deeeec-eb3b-4302-ace0-d8430e5b3dcd" />

@@ -37,7 +37,9 @@ Antigravityは非推奨とします(現在、エラー処理させると劣化�
 
 AIにガイドを必ず読ませてください
 
-推奨モデルはClaude4.5です。
+推奨モデルはClaude4.5です。<br/>
+画像を使った指示を出す場合はGemini3.0 Proに切り替えると優秀です<br/>
+併用を推奨
 
 ### ガイドを入れたフォルダをVSCodeで開く
 <img width="670" height="408" alt="ss5" src="https://github.com/user-attachments/assets/a4deeeec-eb3b-4302-ace0-d8430e5b3dcd" />
